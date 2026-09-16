@@ -7,7 +7,7 @@ import (
     "strconv"
 
     "kitchen/store"
-	//"time"
+	"time"
 	"log"
 )
 
@@ -93,19 +93,7 @@ func (h *Handler) Routes() *http.ServeMux {
     return mux
 }
 
-func CORS(next http.Handler) http.Handler {
-    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-        w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
-        w.Header().Set("Access-Control-Allow-Methods",
-            "GET, POST, PUT, PATCH, DELETE, OPTIONS")
-        w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
-        if r.Method == http.MethodOptions {
-            w.WriteHeader(http.StatusNoContent)
-            return                    // ใบสั่งถามทาง จบตรงนี้ ไม่ต้องเข้าครัว
-        }
-        next.ServeHTTP(w, r)
-    })
-}
+
 func (h *Handler) SlowCtx(w http.ResponseWriter, r *http.Request) {
     ctx := r.Context()                     // สายจูงของใบสั่งใบนี้
     log.Println("เริ่มตุ๋นขาหมู ใช้เวลา 5 วินาที")
